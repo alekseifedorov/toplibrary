@@ -4,17 +4,19 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class WorkerManagerTest {
 
     @Test
-    public void shouldHaveMandatoryWeapons() throws IOException, InterruptedException {
+    public void shouldCallSubmit() throws IOException, InterruptedException {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("results.html");
-        WorkerManager manager = new WorkerManager();
+        ExecutorService executorService = mock(ExecutorService.class);
+        WorkerManager manager = new WorkerManager(executorService);
         manager.start(is);
-        assertThat(manager.getCounterByName());
-        //assertThat(console.gameModel.weapons).contains(Paper.getInstance(), Rock.getInstance(), Scissors.getInstance());
+        verify(executorService, times(9)).submit(any(Runnable.class));
     }
 }

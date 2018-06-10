@@ -14,13 +14,17 @@ import java.util.concurrent.TimeUnit;
 
 public class WorkerManager {
 
-    private static final String GOOGLE_RESULT_LINK_PREFIX = "<a href=\"/url?q=";
+    private static final String GOOGLE_RESULT_LINK_PREFIX = "href=\"/url?q=";
 
     private ConcurrentHashMap<String, Integer> counterByName = new ConcurrentHashMap<>();
 
     private ConcurrentHashMap<Integer, String> nameByHash = new ConcurrentHashMap<>();
 
-    protected ExecutorService service = Executors.newCachedThreadPool();
+    protected ExecutorService service;
+
+    public WorkerManager(ExecutorService service) {
+        this.service = service;
+    }
 
     public void start(InputStream inputStream) throws InterruptedException, IOException {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -47,7 +51,6 @@ public class WorkerManager {
             counterByName.entrySet().stream()
                     .sorted(Comparator.comparing((Map.Entry e) -> (Integer) e.getValue()).reversed())
                     .forEach(e -> System.out.println(e.getKey() + " : " + e.getValue()));
-
         }
     }
 
