@@ -1,25 +1,16 @@
 package assignment.toplibrary;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class WorkerManager {
 
     private static final String GOOGLE_RESULT_LINK_PREFIX = "href=\"/url?q=";
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private ConcurrentHashMap<String, Integer> counterByName = new ConcurrentHashMap<>();
 
@@ -53,10 +44,11 @@ public class WorkerManager {
 
             service.awaitTermination(1, TimeUnit.MINUTES);
 
+            System.out.println();
             counterByName.entrySet().stream()
                     .sorted(Comparator.comparing((Map.Entry e) -> (Integer) e.getValue()).reversed())
                     .limit(5)
-                    .forEach(e -> logger.info(e.getKey() + " : " + e.getValue()));
+                    .forEach(e -> System.out.println(e.getKey() + " : " + e.getValue()));
         }
     }
 

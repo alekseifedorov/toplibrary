@@ -1,8 +1,5 @@
 package assignment.toplibrary;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,8 +10,6 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 class Worker implements Callable<String> {
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // google result url
     private String url;
@@ -32,17 +27,17 @@ class Worker implements Callable<String> {
     }
 
     @Override
-    public String call() throws IOException {
+    public String call() {
         try {
             return doCall();
         } catch(Exception e) {
-            logger.error("Unexpected exception: " + e);
+            System.err.println("Unexpected exception: " + e);
             return null;
         }
     }
 
     private String doCall() throws IOException {
-        logger.info("Processing " + url);
+        System.out.println("Processing " + url);
         URL resultUrl = new URL(url);
         HttpURLConnection urlConnection = (HttpURLConnection) resultUrl.openConnection();
         urlConnection.setRequestProperty("User-Agent", Util.USER_AGENT);
