@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import static org.mockito.Matchers.any;
@@ -17,6 +18,6 @@ public class WorkerManagerTest {
         ExecutorService executorService = mock(ExecutorService.class);
         WorkerManager manager = new WorkerManager(executorService);
         manager.start(is);
-        verify(executorService, times(9)).submit(any(Runnable.class));
+        verify(executorService, times(9)).submit(any(Worker.class));
     }
 }

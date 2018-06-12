@@ -1,40 +1,14 @@
-This is a simple library written in Java for creating a Rock-Paper-Scissors alike command line game.
+This is a program in Java which counts top javascript libraries used in web pages found on Google.
 
 1. How to build
-    Type 'mvn clean install' to build target/rockpaperscissors-1.0.jar'
+    Type 'mvn clean org.apache.maven.plugins:maven-dependency-plugin:2.7:copy-dependencies install' to build toplibrary-1.0.jar and its dependencies
+
 
 2. How to run
-    Type 'java -jar rockpaperscissors-1.0.jar' to run the game.
-The Main class file is 'RockPaperScissors.class'.
+ - Type 'mvn exec:java -Dexec.mainClass="assignment.toplibrary.TopLibrary" ' to run from maven.
+ - Execute run.bat.
 
-3. How to play
-    The following commands are available to type in command line:
 
-> rock
-    Throw Rock
-
-> paper
-    Throw Paper
-
-> scissors
-    Throw Scissors
-
-> mode playerVsComputer
-    Play versus Computer.
-
-> mode computerVsComputer
-    Watch how one Computer plays instead of you versus another Computer. You can just press <Enter> to see one more round.
-
-> reset
-    Reset all the counters and get to the initial state. 
-
-> quit
- Quit the game.
-
-4. How to extend
-    To create a new weapon, create a class inherited from AbstractWeapon and pass an instance in the GameModel constructor. Override the bittenBy method
-to specify the behavior of the weapon.
-
-    To create a new command, create a class inherited from AbstractCommand and pass an instance in the GameModel constructor. Override the execute method
-to specify the functionality.
-
+3. In real application, the following parts should be reconsidered:
+ - A task execution framework should be used instead of the default JDK executors, e.g. Spring TaskExecutor or Quarz.
+ - A web crawler, e.g. jsoup, should be used to download and parse html pages.

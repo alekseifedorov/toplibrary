@@ -1,15 +1,20 @@
 package assignment.toplibrary;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
-class Worker implements Runnable {
+class Worker implements Callable<String> {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     // google result url
     private String url;
@@ -27,26 +32,25 @@ class Worker implements Runnable {
     }
 
     @Override
-    public void run() {
-        URL website = null;
+    public String call() throws IOException {
         try {
-            website = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return;
+            return doCall();
+        } catch(Exception e) {
+            logger.error("Unexpected exception: " + e);
+            return null;
         }
+    }
 
-        HttpURLConnection myURLConnection = null;
-        try {
-            myURLConnection = (HttpURLConnection) website.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        myURLConnection.setRequestProperty("User-Agent", Util.USER_AGENT);
+    private String doCall() throws IOException {
+        logger.info("Processing " + url);
+        URL resultUrl = new URL(url);
+        HttpURLConnection urlConnection = (HttpURLConnection) resultUrl.openConnection();
+        urlConnection.setRequestProperty("User-Agent", Util.USER_AGENT);
+        String jsLibrary = null;
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(myURLConnection.getInputStream()))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
 
+            // todo: it's better to use a web crawler e.g. jsoup
             String s;
             int start = 0;
             while ((s = br.readLine()) != null) {
@@ -60,7 +64,7 @@ class Worker implements Runnable {
                     if (end == -1) {
                         break;
                     }
-                    String jsLibrary = s.substring(start + "src=\"".length(), end + 3);
+                    jsLibrary = s.substring(start + "src=\"".length(), end + 3);
 
                     try {
                         String content = Util.download(url + '/' + jsLibrary);
@@ -73,9 +77,7 @@ class Worker implements Runnable {
                     start = end;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
         }
+        return jsLibrary;
     }
 }
