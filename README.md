@@ -16,3 +16,6 @@ This is a  program in Java which counts top javascript libraries used in web pag
  - A logging framework
  - More tests
  - etc 
+
+4. The output format is following:
+  <.js filename> <counter>
