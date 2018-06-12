@@ -4,8 +4,9 @@ This is a  program in Java which counts top javascript libraries used in web pag
     Type 'mvn clean install' to build toplibrary-1.0.jar.
 
 2. How to run
- - Type 'mvn exec:java -Dexec.mainClass="assignment.toplibrary.TopLibrary" ' to run from maven.
- - Execute run.bat or type 'java -classpath target/toplibrary-1.0.jar assignment.toplibrary.TopLibrary'.
+  Type either following command:
+ -  mvn exec:java -Dexec.mainClass="assignment.toplibrary.TopLibrary"
+ -  java -classpath target/toplibrary-1.0.jar assignment.toplibrary.TopLibrary
 
 
 3. In real application, the following libraries and frameworks should be introduced:
