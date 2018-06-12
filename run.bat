@@ -1,0 +1,1 @@
+java -classpath target/toplibrary-1.0.jar assignment.toplibrary.TopLibrary

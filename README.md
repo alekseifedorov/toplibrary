@@ -10,7 +10,9 @@ This is a  program in Java which counts top javascript libraries used in web pag
 
 3. In real application, the following libraries and frameworks should be introduced:
  - Spring DI
- - Spring Boot to ease building, deploy, logging etc.                                                 
+ - Spring Boot to ease building, deploy, logging etc.
  - A task execution framework e.g. Spring TaskExecutor or Quarz, instead of the default JDK executors.
  - A web crawler, e.g. jsoup, to download and parse the html content.
- - A logging framework.
+ - A logging framework
+ - More tests
+ - etc 
